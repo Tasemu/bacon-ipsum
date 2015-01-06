@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>bacon-ipsum</title>
+
+  <script src="../../webcomponentsjs/webcomponents.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../bacon-ipsum.html">
+
+</head>
+<body>
+
+  <bacon-ipsum id="fixture"></bacon-ipsum>
+
+  <script>
+    var myEl = document.getElementById('fixture');
+
+    suite('<bacon-ipsum>', function() {
+
+      test('defines the "author" property', function() {
+        assert.equal(myEl.author, 'Dimitri Glazkov');
+      });
+
+      test('says hello', function() {
+        assert.equal(myEl.sayHello(), 'bacon-ipsum says, Hello World!');
+        var greetings = myEl.sayHello('greetings Earthlings');
+        assert.equal(greetings, 'bacon-ipsum says, greetings Earthlings');
+      });
+
+      test('fires lasers', function(done) {
+        myEl.addEventListener('bacon-ipsum-lasers-success', function(event) {
+          assert.equal(event.detail.sound, 'Pew pew pew!');
+          done();
+        });
+        myEl.fireLasers();
+      });
+
+    });
+  </script>
+
+</body>
+</html>

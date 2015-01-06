@@ -1,0 +1,52 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+Element providing solution to no problem in particular.
+
+##### Example
+
+    <bacon-ipsum></bacon-ipsum>
+
+@element bacon-ipsum
+@blurb Element providing solution to no problem in particular.
+@status alpha
+@homepage http://polymerlabs.github.io/bacon-ipsum
+-->
+<polymer-element name="bacon-ipsum" attributes="words paragraphs">
+
+  <link rel="import" href="../core-ajax/core-ajax.html">
+
+  <template>
+    <link rel="stylesheet" href="bacon-ipsum.css" />
+
+    <core-ajax
+    auto
+    method="GET"
+    url="http://baconipsum.com/api/"
+    params='{"type":"all-meat", "paras":"{{paragraphs}}"}'
+    handleAs="json"
+    on-core-response="{{handleResponse}}"></core-ajax>
+
+    <p id="thebacon"></p>
+
+  </template>
+
+  <script>
+
+    Polymer({
+      author: 'Montague Monro',
+      words: 5,
+      paragraphs: 2,
+      theBacon: '',
+
+      handleResponse: function (res) {
+        var scope = this;
+        res.detail.response.forEach(function (element) {
+          scope.$.thebacon.innerHTML += (element + "<br><br>");
+        });
+      },
+    });
+
+  </script>
+
+</polymer-element>
